@@ -1,24 +1,35 @@
 import datetime
+import math
 from datetime import date
 
 date_input=raw_input('\n\n\nType month and year (mm/yyyy):\n\n\t')
-while ('/' not in date_input) and ('-' not in date_input) and ('.' not in date_input) and (len(date_input) > 2):
-	print '\nWrong input, try again'
-	date_input=raw_input('\n\nType month and year (mm/yyyy):\n\n\t')
-if '-' in date_input:
-	month, year=date_input.split('-')
-elif '/' in date_input:
-	month, year=date_input.split('/')
-elif '.' in date_input:
-	month, year=date_input.split('.')
-elif len(date_input) < 3:
-	month=date_input
-	date_input=raw_input('Month accepted. Type in year:\n\n\t')
-	year=date_input
-month=int(month)
-year=int(year)
+month=1
+year=1
+input_taken=0
+while input_taken!=2 or year<1 or year>9999: #old checks, keeping in case of bug with new ones: math.isnan(month) or math.isnan(year) or month<1 or month>12  or (('/' not in date_input) and ('-' not in date_input) and ('.' not in date_input) and (len(date_input) > 2)):
+	if input_taken!=0:
+		print '\nWrong input, try again'
+		date_input=raw_input('\n\nType month and year (mm/yyyy):\n\n\t')
+	input_taken=2
+	if '-' in date_input:
+		month, year=date_input.split('-')
+	elif '/' in date_input:
+		month, year=date_input.split('/')
+	elif '.' in date_input:
+		month, year=date_input.split('.')
+	elif len(date_input) < 3 and int(date_input)>0 and int(date_input)<13:
+		month=date_input
+		if int(date_input)>0 and int(date_input)<13:
+			date_input=raw_input('\nMonth accepted. Type in year:\n\n\t')
+			year=date_input
+			input_taken=2
+	else:
+		input_taken=1
+	month=int(month)
+	year=int(year)
+
 mia_kyriakh=date(2018, 1, 7)
-first_day=date(year, int(month), 1)
+first_day=date(year, month, 1)
 day_span=first_day - mia_kyriakh
 day_span=day_span.days%7
 max_date=[31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
