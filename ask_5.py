@@ -40,5 +40,3 @@ for i in range(1,len(c)):
 		maxx=c[i]
 		maxi=i
 print "\n\nThe most popular word from user '" + username + "' einai '" + tweets[maxi] + "'"
-
-#todo: input checks and co.
