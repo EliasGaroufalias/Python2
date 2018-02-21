@@ -16,17 +16,36 @@ if os.path.isfile(source_path2):
 	i=0
 	j=0
 	while j<l:
-		if source_code[j]=='>' and i<29999:
-			i+=1
-		elif source_code[j]=='<' and i>0:
-			i-=1
-		elif source_code[j]=='+' and registry[i]:
-			registry1[i]+=1
+		if source_code[j]=='>':
+			if i<29999:
+				i+=1
+			else:
+				print("\nError 1: Registry index out of range.")
+		elif source_code[j]=='<':
+			if i>0:
+				i-=1
+			else:
+				print("\nError 1: Registry index out of range.")
+				break
+		elif source_code[j]=='+':
+			if registry1[i]<255:
+				registry1[i]+=1
+			else:
+				print("\nError 2: Registry value overflow.")
+				break
 		elif source_code[j]=='-':
-			registry1[i]-=1
+			if registry1[i]>0:
+				registry1[i]-=1
+			else:
+				print("\nError 3: Registry value can't be negative.")
+				break
 		elif source_code[j]==',':
 			#print('make input pretty? no?')
-			registry1[i]=ord(raw_input())
+			try:
+				registry1[i]=ord(raw_input())
+			except:
+				print("\nError 4: Invalid value.")
+				break
 		elif source_code[j]=='.':
 			print(chr(registry1[i]),end='')
 		elif source_code[j]=='[':
